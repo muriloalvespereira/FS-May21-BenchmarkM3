@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+
+    <title>Netflix Clone</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-netflix px-5">
+      <a class="navbar-brand" href="#"
+        ><img src="assets/netflix_logo.png" alt="" id="logo-navbar"
+      /></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="./index.html">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Add</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./edit.html">Edit</a>
+          </li>
+        </ul>
+        <i class="fas fa-search mr-3"></i>
+        <p class="pt-3 mr-3">KIDS</p>
+        <i class="fas fa-bell mr-3"></i>
+        <img class="mr-2" src="./assets/kidssecond.png" alt="" />
+        <i class="fas fa-sort-down"></i>
+      </div>
+    </nav>
+
+    <div class="container-fluid px-5 mt-2">
+      <div class="row justify-content-center">
+        <form class="border p-5 form w-50">
+          <h2 class="text-center">Add New Movies</h2>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              aria-describedby="nameField"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              type="text"
+              rows="4"
+              class="form-control"
+              id="description"
+              aria-describedby="descriptionField"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <input
+              type="text"
+              class="form-control"
+              id="category"
+              aria-describedby="categoryField"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="imageUrl">Img URL</label>
+            <input
+              type="text"
+              class="form-control"
+              id="imageUrl"
+              aria-describedby="imageUrlField"
+              required
+            />
+          </div>
+          <div class="d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-primary btn-submit"
+              onclick="sendForm(event)"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger d-none"
+              onclick="deleteProduct()"
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="row mt-4"></div>
+
+      <div class="row mt-5"></div>
+
+      <div class="row mt-5"></div>
+    </div>
+
+    <footer class="mt-5">
+      <div class="container px-5">
+        <div class="row">
+          <div class="col-12 mb-2">
+            <i class="fab fa-facebook-square mr-2" style="font-size: 23px"></i>
+            <i class="fab fa-instagram mr-2" style="font-size: 23px"></i>
+            <i class="fab fa-twitter mr-2" style="font-size: 23px"></i>
+            <i class="fab fa-youtube mr-2" style="font-size: 23px"></i>
+          </div>
+          <div class="col-6 col-lg-3">
+            <p class="text-nowrap">Audio and Subtitles</p>
+            <p class="text-nowrap">Media Center</p>
+            <p class="text-nowrap">Privacy</p>
+            <p class="text-nowrap">Contact us</p>
+          </div>
+          <div class="col-6 col-lg-3">
+            <p class="text-nowrap">Audio Description</p>
+            <p class="text-nowrap">Investor Relations</p>
+            <p class="text-nowrap">Legal Notices</p>
+          </div>
+          <div class="col-6 col-lg-3">
+            <p class="text-nowrap">Help Center</p>
+            <p class="text-nowrap">Jobs</p>
+            <p class="text-nowrap">Cookie Preferences</p>
+          </div>
+          <div class="col-6 col-lg-3">
+            <p class="text-nowrap">Gift Cards</p>
+            <p class="text-nowrap">Terms of Use</p>
+            <p class="text-nowrap">Corporate Information</p>
+          </div>
+          <div class="col-12 mb-2 my-4">
+            <a class="service-code" href="#">Service Code</a>
+          </div>
+          <div class="col-12 mb-2">
+            <p id="copyright">
+              &reg;1997 - 2019 Netflix, Inc. {i-0d00fcda2fdf9c0de}
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const productId = new URLSearchParams(window.location.search).get("id");
+      const url = productId
+        ? "https://striveschool-api.herokuapp.com/api/movies/" + productId
+        : "https://striveschool-api.herokuapp.com/api/movies/";
+
+      const method = productId ? "PUT" : "POST";
+
+      if (productId) {
+        document.querySelector(".btn-submit").innerText = "Edit";
+        document.querySelector(".btn-danger").classList.remove("d-none");
+      }
+
+      const getData = async () => {
+        const response = await fetch(url, {
+          method,
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjk1ZGIzNTgxNzAwMTVjMjI3MjYiLCJpYXQiOjE2MjUwNTc2MzAsImV4cCI6MTYyNjI2NzIzMH0.PCebFyd28A7h5LkwblkqMU8Gf3BXrcfKepkegk76eaw",
+          },
+        });
+
+        const data = await response.json();
+        if (productId) {
+          document.querySelector("#name").value = data.name;
+          document.querySelector("#description").value = data.description;
+          document.querySelector("#category").value = data.category;
+          document.querySelector("#imageUrl").value = data.imageUrl;
+        }
+      };
+
+      const deleteProduct = async () => {
+        const response = await fetch(url, {
+          method: "DELETE",
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjk1ZGIzNTgxNzAwMTVjMjI3MjYiLCJpYXQiOjE2MjUwNTc2MzAsImV4cCI6MTYyNjI2NzIzMH0.PCebFyd28A7h5LkwblkqMU8Gf3BXrcfKepkegk76eaw",
+          },
+        });
+
+        if (response.ok) {
+          document.querySelector(".form").reset();
+
+          alert("Product deleted");
+          window.location.replace("./edit.html");
+        }
+      };
+
+      const sendForm = async (event) => {
+        const formDetails = {
+          name: document.querySelector("#name").value,
+          description: document.querySelector("#description").value,
+          category: document.querySelector("#category").value,
+          imageUrl: document.querySelector("#imageUrl").value,
+        };
+
+        try {
+          const response = await fetch(url, {
+            method,
+            body: JSON.stringify(formDetails),
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjk1ZGIzNTgxNzAwMTVjMjI3MjYiLCJpYXQiOjE2MjUwNTc2MzAsImV4cCI6MTYyNjI2NzIzMH0.PCebFyd28A7h5LkwblkqMU8Gf3BXrcfKepkegk76eaw",
+              "Content-Type": "application/json",
+            },
+          });
+          if (response.ok) {
+            document.querySelector(".form").reset();
+            if (productId) {
+              alert("Product successfully edited");
+              window.location.replace("./edit.html");
+            } else {
+              alert("Product successfully added");
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      window.onload = () => {
+        getData();
+      };
+    </script>
+    <script
+      src="https://kit.fontawesome.com/b6ae80becd.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

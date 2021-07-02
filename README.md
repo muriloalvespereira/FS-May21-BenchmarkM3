@@ -1,2 +1,5 @@
-# FS-May21-Build-Week-1
- 
+# netflix-ui
+
+
+
+[DEMO](http://ubeytdemir.me/netflix-ui/)
