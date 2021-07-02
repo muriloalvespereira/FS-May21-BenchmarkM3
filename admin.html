@@ -47,7 +47,7 @@
             <a class="nav-link" href="./index.html">Home</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">Add</a>
+            <a class="nav-link" href="./admin.html">Add</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./edit.html">Edit</a>
@@ -63,7 +63,7 @@
 
     <div class="container-fluid px-5 mt-2">
       <div class="row justify-content-center">
-        <form class="border p-5 form w-50">
+        <form class="border p-5 form">
           <h2 class="text-center">Add New Movies</h2>
           <div class="form-group">
             <label for="name">Name</label>
@@ -112,7 +112,10 @@
               class="btn btn-primary btn-submit"
               onclick="sendForm(event)"
             >
-              Submit
+              <span>Submit</span>
+              <div class="spinner-border text-light d-none" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
             </button>
             <button
               type="button"
@@ -187,16 +190,16 @@
       }
 
       const getData = async () => {
-        const response = await fetch(url, {
-          method,
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjk1ZGIzNTgxNzAwMTVjMjI3MjYiLCJpYXQiOjE2MjUwNTc2MzAsImV4cCI6MTYyNjI2NzIzMH0.PCebFyd28A7h5LkwblkqMU8Gf3BXrcfKepkegk76eaw",
-          },
-        });
-
-        const data = await response.json();
         if (productId) {
+          const response = await fetch(url, {
+            method,
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjk1ZGIzNTgxNzAwMTVjMjI3MjYiLCJpYXQiOjE2MjUwNTc2MzAsImV4cCI6MTYyNjI2NzIzMH0.PCebFyd28A7h5LkwblkqMU8Gf3BXrcfKepkegk76eaw",
+            },
+          });
+
+          const data = await response.json();
           document.querySelector("#name").value = data.name;
           document.querySelector("#description").value = data.description;
           document.querySelector("#category").value = data.category;
@@ -222,6 +225,8 @@
       };
 
       const sendForm = async (event) => {
+        let spinner = document.querySelector(".spinner-border");
+        spinner.classList.remove("d-none");
         const formDetails = {
           name: document.querySelector("#name").value,
           description: document.querySelector("#description").value,
@@ -246,6 +251,7 @@
               window.location.replace("./edit.html");
             } else {
               alert("Product successfully added");
+              spinner.classList.add("d-none");
             }
           }
         } catch (err) {

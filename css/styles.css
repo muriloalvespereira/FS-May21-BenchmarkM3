@@ -34,8 +34,17 @@ p {
   cursor: pointer;
 }
 
+.spinner-border {
+  width: 20px;
+  height: 20px;
+}
+
 a {
   cursor: pointer;
+}
+
+.form {
+  width: 50%;
 }
 
 .btn {
