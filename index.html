@@ -51,7 +51,7 @@
     </div>
   </nav>
 
-  <div class="container-fluid px-5 mt-2">
+  <div class="container-fluid px-5 mt-2 create-sections">
     <div id="row-icons" class="row">
       <div class="col">
         <h3 class="col-12 col-sm-4 col-md-3 col-lg-2 pl-0 text-nowrap">TV Shows</h3>
@@ -75,20 +75,6 @@
 
         </div>
       </div>
-    </div>
-
-    <div class="row mt-4 first-section">
-      <h5 class="col-12 text-nowrap mb-1 first-section-h5"></h5>
-    </div>
-
-    <div class="row mt-5 second-section">
-      <h5 class="col-12 text-nowrap mb-1 second-section-h5"></h5>
-
-    </div>
-
-    <div class="row mt-5 third-section">
-      <h5 class="col-12 text-nowrap mb- third-section-h5"></h5>
-
     </div>
   </div>
 
@@ -134,66 +120,111 @@
     </div>
   </footer>
   <script>
-    const displayCards = async (dataDrama) => {
-      dataDrama.forEach((element) => {
-        let firstSectionH5 = document.querySelector(".first-section-h5");
-        firstSectionH5.innerText = element.category;
-        let firstSection = document.querySelector(".first-section");
-        firstSection.innerHTML += `<div class="col-12 col-sm-4 col-md-3 col-lg pr-0">
-          <img class="img-fluid" src="${element.imageUrl}" alt="" />
-        </div>`;
-      });
-    };
-    const displayCardsHorror = async (dataHorror) => {
-      dataHorror.forEach((element) => {
-        let firstSectionH5 = document.querySelector(".second-section-h5");
-        firstSectionH5.innerText = element.category;
-        let firstSection = document.querySelector(".second-section");
-        firstSection.innerHTML += `<div class="col-12 col-sm-4 col-md-3 col-lg pr-0">
-          <img class="img-fluid" src="${element.imageUrl}" alt="" />
-        </div>`;
-      });
-    };
+    // const displayCards = async (dataDrama) => {
+    //   dataDrama.forEach((element) => {
+    //     let firstSectionH5 = document.querySelector(".first-section-h5");
+    //     firstSectionH5.innerText = element.category;
+    //     let firstSection = document.querySelector(".first-section");
+    //     firstSection.innerHTML += `<div class="col-12 col-sm-4 col-md-3 col-lg pr-0">
+    //       <img class="img-fluid" src="${element.imageUrl}" alt="" />
+    //     </div>`;
+    //   });
+    // };
+    // const displayCardsHorror = async (dataHorror) => {
+    //   dataHorror.forEach((element) => {
+    //     let firstSectionH5 = document.querySelector(".second-section-h5");
+    //     firstSectionH5.innerText = element.category;
+    //     let firstSection = document.querySelector(".second-section");
+    //     firstSection.innerHTML += `<div class="col-12 col-sm-4 col-md-3 col-lg pr-0">
+    //       <img class="img-fluid" src="${element.imageUrl}" alt="" />
+    //     </div>`;
+    //   });
+    // };
 
-    const displayCardsComedy = async (dataComedy) => {
-      
-      dataComedy.forEach((element) => {
-        let firstSectionH5 = document.querySelector(".third-section-h5");
-        firstSectionH5.innerText = element.category;
-        let firstSection = document.querySelector(".third-section");
-        firstSection.innerHTML += `<div class="col-12 col-sm-4 col-md-3 col-lg pr-0">
-          <img class="img-fluid" src="${element.imageUrl}" alt="" />
-        </div>`;
-      });
-    };
+    // const displayCardsComedy = async (dataComedy) => {
 
-
-
-    let allUrls = ["https://striveschool-api.herokuapp.com/api/movies/Drama/",
-      "https://striveschool-api.herokuapp.com/api/movies/Horror/",
-      "https://striveschool-api.herokuapp.com/api/movies/Comedy/"]
+    //   dataComedy.forEach((element) => {
+    //     let firstSectionH5 = document.querySelector(".third-section-h5");
+    //     firstSectionH5.innerText = element.category;
+    //     let firstSection = document.querySelector(".third-section");
+    //     firstSection.innerHTML += `<div class="col-12 col-sm-4 col-md-3 col-lg pr-0">
+    //       <img class="img-fluid" src="${element.imageUrl}" alt="" />
+    //     </div>`;
+    //   });
+    // };
 
 
-      Promise.all(allUrls.map(url => fetch(url,{
+    // const callCards = (allUrls) => {
+    //   Promise.all(allUrls.map(url => fetch(url, {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization:
+    //         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjk1ZGIzNTgxNzAwMTVjMjI3MjYiLCJpYXQiOjE2MjUwNTc2MzAsImV4cCI6MTYyNjI2NzIzMH0.PCebFyd28A7h5LkwblkqMU8Gf3BXrcfKepkegk76eaw",
+    //     },
+    //   }
+    //   ).then(resp => resp.json()
+    //   ).then(data => {
+    //     console.log(data)
+    //     let dataDrama = data.filter(elem => elem.category.includes("Drama"))
+    //     displayCards(dataDrama);
+    //     let dataHorror = data.filter(elem => elem.category.includes("Horror"))
+    //     displayCardsHorror(dataHorror);
+    //     let dataComedy = data.filter(elem => elem.category.includes("Comedy"))
+    //     displayCardsComedy(dataComedy);
+    //   })
+    //   ))
+    // };
+
+    const createSections = async (mainUrl) => {
+      const response = await fetch(mainUrl, {
         method: "GET",
         headers: {
           Authorization:
             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjk1ZGIzNTgxNzAwMTVjMjI3MjYiLCJpYXQiOjE2MjUwNTc2MzAsImV4cCI6MTYyNjI2NzIzMH0.PCebFyd28A7h5LkwblkqMU8Gf3BXrcfKepkegk76eaw",
         },
-      }
-      ).then(resp => resp.json()
-      ).then(data => {
-         let dataDrama = data.filter(elem => elem.category.includes("Drama"))
-         displayCards(dataDrama);
-         let dataHorror = data.filter(elem => elem.category.includes("Horror"))
-         displayCardsHorror(dataHorror);
-         let dataComedy = data.filter(elem => elem.category.includes("Comedy"))
-         displayCardsComedy(dataComedy);
-    })
-      ));
-    window.onload = async () => {
+      })
+      const data = await response.json();
+      buildSections(data);
+    }
 
+    const buildSections = (data) => {
+      const categories = data
+      categories.forEach(category => {
+        let sections = document.querySelector(".create-sections");
+        let div = document.createElement("div")
+        div.classList.add("row", "mt-4", category)
+        sections.appendChild(div)
+        let h5 = document.createElement("h5")
+        h5.classList.add("col-12", "text-nowrap", "mb-1")
+        h5.innerText = category
+        div.appendChild(h5)
+        buildCards(category)
+      })
+    }
+
+    const buildCards = async (category) => {
+      let getSection = document.querySelector(`.${category}`)
+      let response = await fetch("https://striveschool-api.herokuapp.com/api/movies/" + category, {
+        method: "GET",
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjk1ZGIzNTgxNzAwMTVjMjI3MjYiLCJpYXQiOjE2MjUwNTc2MzAsImV4cCI6MTYyNjI2NzIzMH0.PCebFyd28A7h5LkwblkqMU8Gf3BXrcfKepkegk76eaw",
+        },
+      })
+      let data = await response.json();
+      data.forEach(image => {
+        getSection.innerHTML += `<div class="col-12 col-sm-4 col-md-3 col-lg pr-0">
+            <img class="img-fluid" src="${image.imageUrl}" alt="" />
+          </div>`;
+      })
+
+    }
+    
+    window.onload = () => {
+      let mainUrl = "https://striveschool-api.herokuapp.com/api/movies/"
+      createSections(mainUrl);
     };
+
   </script>
   <script src="https://kit.fontawesome.com/b6ae80becd.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
